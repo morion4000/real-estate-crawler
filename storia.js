@@ -8,7 +8,7 @@ class STORIA {
         this.BASE_URL = 'https://www.storia.ro/vanzare/apartament';
         this.LOCATION = 'mehedinti/drobeta-turnu-severin';
         this.SEARCH_URL = `${this.BASE_URL}/${this.LOCATION}`;
-        this.SEARCH_RESULTS_PER_PAGE = 70; // default 24
+        this.SEARCH_RESULTS_PER_PAGE = 24; // default 24
         this.PAGE_URL = `?nrAdsPerPage=${this.SEARCH_RESULTS_PER_PAGE}&page=`;
         this.SEARCH_CSS_QUERY = '.offer-item-details h3 a';
         this.DETAILS_CSS_QUERIES = {
@@ -91,14 +91,12 @@ class STORIA {
             $,
             html
         } = await this.navigate(url);
-
         const exchange_rate = await Currency.get_ron_price_for_eur();
-        const description = $('div.css-uiakpw').text();
-        const title = $('h1.css-1ld8fwi').text();
-        const properties = $('div.css-oyemm7 ul li');
-        let price = $('div.css-1vr19r7').text();
 
-        const is_ron = price.indexOf('RON') !== -1;
+        let title;
+        let price;
+        let description;
+        let photos;
         let rooms;
         let year;
         let floor;
@@ -107,45 +105,67 @@ class STORIA {
         let price_ron;
         let price_eur;
 
-        price = price.replace(/\s/g, '');
-        price = parseInt(price);
+        // TODO: Get published_at
+        // TODO: Get modified_at
 
-        if (is_ron) {
-            price_ron = price;
+        try {
+            let is_ron = false;
+            let properties;
 
-            if (exchange_rate) {
-                price_eur = price / exchange_rate;
-                price_eur = parseInt(price_eur);
+            description = $('div.css-uiakpw').text();
+            title = $('h1.css-1ld8fwi').text();
+            properties = $('div.css-oyemm7 ul li');
+            price = $('div.css-1vr19r7').text();
+            photos = $('.slick-npages');
+
+            is_ron = price.indexOf('RON') !== -1;
+            price = price.replace(/\s/g, '');
+            price = parseInt(price);
+
+            if (is_ron) {
+                price_ron = price;
+
+                if (exchange_rate) {
+                    price_eur = price / exchange_rate;
+                    price_eur = parseInt(price_eur);
+                }
+            } else {
+                price_eur = price;
+
+                if (exchange_rate) {
+                    price_ron = price * exchange_rate;
+                    price_ron = parseInt(price_ron);
+                }
             }
-        } else {
-            price_eur = price;
 
-            if (exchange_rate) {
-                price_ron = price * exchange_rate;
-                price_ron = parseInt(price_ron);
-            }
+            properties.each((i, element) => {
+                const property = $(element).text().toLowerCase();
+
+                if (property.indexOf('camere') !== -1) {
+                    rooms = property.split(':')[1];
+                    rooms = parseInt(rooms);
+                } else if (property.indexOf('anul') !== -1) {
+                    year = property.split(':')[1];
+                    year = parseInt(year);
+                } else if (property.indexOf('etaj') !== -1) {
+                    floor = property.split(':')[1];
+                    floor = floor.replace(/\s/g, '');
+                } else if (property.indexOf('suprafata utila') !== -1) {
+                    area = property.split(':')[1];
+                    area = parseInt(area);
+                } else if (property.indexOf('compartimentare') !== -1) {
+                    layout = property.split(':')[1];
+                    layout = layout.replace(/\s/g, '');
+                }
+            });
+
+            photos = photos[0];
+            photos = $(photos).text();
+            photos = photos.split('/')[1];
+            photos = parseInt(photos) || null;
+        } catch (e) {
+            console.error(e);
         }
-
-        properties.each((i, element) => {
-            const property = $(element).text().toLowerCase();
-
-            if (property.indexOf('camere') !== -1) {
-                rooms = property.split(':')[1];
-                rooms = parseInt(rooms);
-            } else if (property.indexOf('anul') !== -1) {
-                year = property.split(':')[1];
-                year = parseInt(year);
-            } else if (property.indexOf('etaj') !== -1) {
-                floor = property.split(':')[1];
-                floor = floor.replace(/\s/g, '');
-            } else if (property.indexOf('suprafata utila') !== -1) {
-                area = property.split(':')[1];
-                area = parseInt(area);
-            } else if (property.indexOf('compartimentare') !== -1) {
-                layout = property.split(':')[1];
-                layout = layout.replace(/\s/g, '');
-            }
-        });
 
         return {
             url: url,
@@ -158,6 +178,7 @@ class STORIA {
             floor: floor,
             area: area,
             layout: layout,
+            photos: photos,
             raw: html
         };
     }

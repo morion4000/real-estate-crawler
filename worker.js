@@ -23,7 +23,7 @@ const MONGO_URL = process.env.MONGO_URL;
     const link = links[i];
     const details = await storia.getDetailsPage(link);
 
-    await db.ad.create({
+    await db.property.create({
       ...details,
       source: 'storia'
     });

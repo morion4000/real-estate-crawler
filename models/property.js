@@ -34,6 +34,15 @@ const schema = new mongoose.Schema({
     year: {
         type: Number
     },
+    photos: {
+        type: Number
+    },
+    published_at: {
+        type: Date
+    },
+    modified_at: {
+        type: Date
+    },
     raw: {
         type: mongoose.SchemaTypes.Mixed,
         //required: true
@@ -47,6 +56,6 @@ const schema = new mongoose.Schema({
     strict: false
 });
 
-const model = mongoose.model('Ad', schema);
+const model = mongoose.model('Property', schema);
 
 module.exports = model;
