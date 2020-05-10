@@ -12,13 +12,31 @@ const schema = new mongoose.Schema({
     description: {
         type: String
     },
-    price: {
+    price_ron: {
+        type: Number
+    },
+    price_eur: {
+        type: Number
+    },
+    area: {
+        type: Number
+    },
+    rooms: {
         type: Number,
         required: true
     },
+    layout: {
+        type: String
+    },
+    floor: {
+        type: String
+    },
+    year: {
+        type: Number
+    },
     raw: {
         type: mongoose.SchemaTypes.Mixed,
-        required: true
+        //required: true
     },
     source: {
         type: String,
