@@ -1,0 +1,22 @@
+{
+  "name": "real-estate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "worker.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "command-line-args": "^5.1.1",
+    "mongoose": "^5.9.6",
+    "puppeteer": "^3.0.4",
+    "uuid": "^7.0.2"
+  },
+  "devDependencies": {
+    "jshint": "^2.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ionut Moraru",
+  "license": "ISC",
+  "homepage": "https://www.morion4000.com"
+}
