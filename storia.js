@@ -1,10 +1,10 @@
 // @see: https://cheerio.js.org/
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
-const Currency = require('./currency');
 
 class STORIA {
-    constructor() {
+    constructor(exchange_rate) {
+        this.exchange_rate = exchange_rate;
         this.BASE_URL = 'https://www.storia.ro/vanzare/apartament';
         this.LOCATION = 'mehedinti/drobeta-turnu-severin';
         this.SEARCH_URL = `${this.BASE_URL}/${this.LOCATION}`;
@@ -22,6 +22,7 @@ class STORIA {
         });
 
         this.page = await this.browser.newPage();
+
         /*
         await this.page.setRequestInterception(true);
 
@@ -91,7 +92,6 @@ class STORIA {
             $,
             html
         } = await this.navigate(url);
-        const exchange_rate = await Currency.get_ron_price_for_eur();
 
         let title;
         let price;
@@ -125,17 +125,13 @@ class STORIA {
             if (is_ron) {
                 price_ron = price;
 
-                if (exchange_rate) {
-                    price_eur = price / exchange_rate;
-                    price_eur = parseInt(price_eur);
-                }
+                price_eur = price / this.exchange_rate;
+                price_eur = parseInt(price_eur);
             } else {
                 price_eur = price;
 
-                if (exchange_rate) {
-                    price_ron = price * exchange_rate;
-                    price_ron = parseInt(price_ron);
-                }
+                price_ron = price * this.exchange_rate;
+                price_ron = parseInt(price_ron);
             }
 
             properties.each((i, element) => {

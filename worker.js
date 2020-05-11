@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const STORIA = require('./storia');
 const db = require('./models');
+const Currency = require('./currency');
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -12,7 +13,8 @@ const MONGO_URL = process.env.MONGO_URL;
     poolSize: 5
   });
 
-  const storia = new STORIA();
+  const exchange_rate = await Currency.get_ron_price_for_eur();
+  const storia = new STORIA(exchange_rate);
 
   await storia.init();
 
