@@ -44,8 +44,7 @@ const schema = new mongoose.Schema({
         type: Date
     },
     raw: {
-        type: mongoose.SchemaTypes.Mixed,
-        //required: true
+        type: mongoose.SchemaTypes.Mixed
     },
     source: {
         type: String,

@@ -175,7 +175,7 @@ class STORIA {
             area: area,
             layout: layout,
             photos: photos,
-            raw: html
+            //raw: html
         };
     }
 }
