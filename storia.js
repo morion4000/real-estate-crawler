@@ -18,7 +18,8 @@ class STORIA {
 
     async init() {
         this.browser = await puppeteer.launch({
-            headless: true
+            headless: true,
+            args: ['--no-sandbox']
         });
 
         this.page = await this.browser.newPage();
