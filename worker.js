@@ -16,7 +16,7 @@ const MONGO_URL = process.env.MONGO_URL;
   const exchange_rate = await Currency.get_ron_price_for_eur();
   const storia = new STORIA(exchange_rate);
 
-  await storia.init();
+  await storia.launch();
 
   const links = await storia.getSearchResults();
   console.log(`Found ${links.length} links`);
@@ -35,7 +35,7 @@ const MONGO_URL = process.env.MONGO_URL;
     }
   }
 
-  await storia.destroy();
+  await storia.close();
 
-  //process.exit(1);
+  process.exit(1);
 })();

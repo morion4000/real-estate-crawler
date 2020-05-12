@@ -1,9 +1,11 @@
 // @see: https://cheerio.js.org/
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
+const Browser = require('./browser');
 
-class STORIA {
+class STORIA extends Browser {
     constructor(exchange_rate) {
+        super();
+        
         this.exchange_rate = exchange_rate;
         this.BASE_URL = 'https://www.storia.ro/vanzare/apartament';
         this.LOCATION = 'mehedinti/drobeta-turnu-severin';
@@ -16,58 +18,9 @@ class STORIA {
         };
     }
 
-    async init() {
-        this.browser = await puppeteer.launch({
-            headless: true,
-            args: ['--no-sandbox']
-        });
-
-        this.page = await this.browser.newPage();
-
-        /*
-        await this.page.setRequestInterception(true);
-
-        this.page.on('request', request => {
-            if (request.isNavigationRequest() && request.redirectChain().length !== 0) {
-                request.abort();
-            } else {
-                request.continue();
-            }
-        });
-        */
-
-        console.log(await this.browser.userAgent());
-    }
-
-    async destroy() {
-        this.browser.close();
-    }
-
-    async navigate(url) {
-        console.log(`Getting ${url}`);
-
-        let html, $;
-
-        try {
-            const response = await this.page.goto(url);
-
-            html = await this.page.evaluate(() => document.body.innerHTML);
-            $ = cheerio.load(html);
-        } catch (e) {
-            console.error(`There was an error`);
-        }
-
-        return {
-            $: $,
-            html: html
-        };
-    }
-
     async getSearchResults(url = this.SEARCH_URL, page = 1, links = []) {
-        const {
-            $,
-            html
-        } = await this.navigate(`${url}/${this.PAGE_URL}${page}`);
+        const html = await this.navigate(`${url}/${this.PAGE_URL}${page}`);
+        const $ = cheerio.load(html);
 
         if ($ && html) {
             const results = $(this.SEARCH_CSS_QUERY);
@@ -89,10 +42,8 @@ class STORIA {
     }
 
     async getDetailsPage(url) {
-        const {
-            $,
-            html
-        } = await this.navigate(url);
+        const html = await this.navigate(url);
+        const $ = cheerio.load(html);
 
         let title;
         let price;
@@ -159,7 +110,7 @@ class STORIA {
             photos = photos[0];
             photos = $(photos).text();
             photos = photos.split('/')[1];
-            photos = parseInt(photos) || null;
+            photos = parseInt(photos) || 0;
         } catch (e) {
             console.error(e);
         }
