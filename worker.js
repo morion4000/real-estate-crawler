@@ -36,4 +36,6 @@ const MONGO_URL = process.env.MONGO_URL;
   }
 
   await storia.destroy();
+
+  //process.exit(1);
 })();
