@@ -25,10 +25,14 @@ const MONGO_URL = process.env.MONGO_URL;
     const link = links[i];
     const details = await storia.getDetailsPage(link);
 
-    await db.property.create({
-      ...details,
-      source: 'storia'
-    });
+    try {
+      await db.property.create({
+        ...details,
+        source: 'storia'
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   await storia.destroy();
