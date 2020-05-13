@@ -6,6 +6,11 @@ const Currency = require('./currency');
 
 const MONGO_URL = process.env.MONGO_URL;
 
+process.on('unhandledRejection', (reason, p) => {
+  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+  process.exit();
+});
+
 (async () => {
   await mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
