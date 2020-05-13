@@ -13,8 +13,9 @@ const MONGO_URL = process.env.MONGO_URL;
     poolSize: 5
   });
 
+  const location = 'mehedinti/drobeta-turnu-severin';
   const exchange_rate = await Currency.get_ron_price_for_eur();
-  const storia = new STORIA(exchange_rate);
+  const storia = new STORIA(exchange_rate, location);
 
   await storia.launch();
 
@@ -26,9 +27,12 @@ const MONGO_URL = process.env.MONGO_URL;
     const details = await storia.getDetailsPage(link);
 
     try {
+      // TODO: Consider using update or create (to decrease the db size)
+      // and other benefits
       await db.property.create({
         ...details,
-        source: 'storia'
+        source: 'storia',
+        location: location
       });
     } catch (e) {
       console.error(e);

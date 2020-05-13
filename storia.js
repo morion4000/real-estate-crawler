@@ -3,13 +3,13 @@ const cheerio = require('cheerio');
 const Browser = require('./browser');
 
 class STORIA extends Browser {
-    constructor(exchange_rate) {
+    constructor(exchange_rate, location) {
         super();
         
         this.exchange_rate = exchange_rate;
+        this.location = location || 'mehedinti/drobeta-turnu-severin';
         this.BASE_URL = 'https://www.storia.ro/vanzare/apartament';
-        this.LOCATION = 'mehedinti/drobeta-turnu-severin';
-        this.SEARCH_URL = `${this.BASE_URL}/${this.LOCATION}`;
+        this.SEARCH_URL = `${this.BASE_URL}/${this.location}`;
         this.SEARCH_RESULTS_PER_PAGE = 24; // default 24
         this.PAGE_URL = `?nrAdsPerPage=${this.SEARCH_RESULTS_PER_PAGE}&page=`;
         this.SEARCH_CSS_QUERY = '.offer-item-details h3 a';
