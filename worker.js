@@ -6,12 +6,7 @@ const Currency = require('./currency');
 
 const MONGO_URL = process.env.MONGO_URL;
 
-process.on('unhandledRejection', (reason, p) => {
-  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
-  process.exit();
-});
-
-(async () => {
+module.exports = async () => {
   await mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -45,6 +40,4 @@ process.on('unhandledRejection', (reason, p) => {
   }
 
   await storia.close();
-
-  process.exit(1);
-})();
+};
