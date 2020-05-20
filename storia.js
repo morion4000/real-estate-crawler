@@ -7,7 +7,7 @@ class STORIA extends Browser {
         super();
         
         this.exchange_rate = exchange_rate;
-        this.location = location || 'mehedinti/drobeta-turnu-severin';
+        this.location = location;
         this.BASE_URL = 'https://www.storia.ro/vanzare/apartament';
         this.SEARCH_URL = `${this.BASE_URL}/${this.location}`;
         this.SEARCH_RESULTS_PER_PAGE = 24; // default 24
@@ -32,7 +32,7 @@ class STORIA extends Browser {
 
             // FIXME: If the last page has exactly this.SEARCH_RESULTS_PER_PAGE
             // items, the script will skip it (rare edge case)
-            if (results.length === this.SEARCH_RESULTS_PER_PAGE) {
+            if (results.length >= this.SEARCH_RESULTS_PER_PAGE) {
                 page++;
                 await this.getSearchResults(url, page, links);
             }

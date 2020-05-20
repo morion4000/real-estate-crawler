@@ -6,14 +6,13 @@ const Currency = require('./currency');
 
 const MONGO_URL = process.env.MONGO_URL;
 
-module.exports = async () => {
+module.exports = async (location) => {
   await mongoose.connect(MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     poolSize: 5
   });
 
-  const location = 'mehedinti/drobeta-turnu-severin';
   const exchange_rate = await Currency.get_ron_price_for_eur();
   const storia = new STORIA(exchange_rate, location);
 
