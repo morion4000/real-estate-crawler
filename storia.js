@@ -65,6 +65,11 @@ class STORIA extends Browser {
             let properties;
 
             description = $('div.css-uiakpw').text();
+
+            if (!description) {
+                description = $('div.css-8w6buu').text();
+            }
+
             title = $('h1.css-1ld8fwi').text();
             properties = $('div.css-oyemm7 ul li');
             price = $('div.css-1vr19r7').text();

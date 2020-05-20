@@ -26,13 +26,23 @@ module.exports = async (location) => {
     const details = await storia.getDetailsPage(link);
 
     try {
-      // TODO: Consider using update or create (to decrease the db size)
-      // and other benefits
+      await db.property.update({
+        url: details.url
+      }, {
+        ...details,
+        source: 'storia',
+        location: location
+      }, {
+        upsert: true
+      });
+
+      /*
       await db.property.create({
         ...details,
         source: 'storia',
         location: location
       });
+      */
     } catch (e) {
       console.error(e);
     }

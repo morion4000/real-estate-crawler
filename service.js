@@ -19,4 +19,4 @@ async function service() {
 
 setInterval(service, INTERVAL * 1000);
 
-//service();
+service();
