@@ -5,7 +5,7 @@ const Browser = require('./browser');
 class STORIA extends Browser {
     constructor(exchange_rate, location) {
         super();
-        
+
         this.exchange_rate = exchange_rate;
         this.location = location;
         this.BASE_URL = 'https://www.storia.ro/vanzare/apartament';
@@ -20,7 +20,13 @@ class STORIA extends Browser {
 
     async getSearchResults(url = this.SEARCH_URL, page = 1, links = []) {
         const html = await this.navigate(`${url}/${this.PAGE_URL}${page}`);
-        const $ = cheerio.load(html);
+        let $;
+
+        try {
+            $ = cheerio.load(html);
+        } catch (e) {
+            console.error(`error parsing html`);
+        }
 
         if ($ && html) {
             const results = $(this.SEARCH_CSS_QUERY);
