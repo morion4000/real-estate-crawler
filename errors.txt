@@ -1,0 +1,48 @@
+Getting https://www.storia.ro/oferta/apartament-3-camere-zona-iosefin-IDiTc2.html#0661a72d2a
+20/05/2020 19:31:04MongooseError [CastError]: Cast to Number failed for value "NaN" at path "price_eur"
+20/05/2020 19:31:04    at new CastError (/usr/src/app/node_modules/mongoose/lib/error/cast.js:29:11)
+20/05/2020 19:31:04    at model.Query.exec (/usr/src/app/node_modules/mongoose/lib/query.js:4341:21)
+20/05/2020 19:31:04    at model.Query.Query.then (/usr/src/app/node_modules/mongoose/lib/query.js:4433:15)
+20/05/2020 19:31:04    at runMicrotasks (<anonymous>)
+20/05/2020 19:31:04    at processTicksAndRejections (internal/process/task_queues.js:97:5) {
+20/05/2020 19:31:04  messageFormat: undefined,
+20/05/2020 19:31:04  stringValue: '"NaN"',
+20/05/2020 19:31:04  kind: undefined,
+20/05/2020 19:31:04  value: NaN,
+20/05/2020 19:31:04  path: 'price_eur',
+20/05/2020 19:31:04  reason: AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+20/05/2020 19:31:04
+20/05/2020 19:31:04    assert.ok(!isNaN(val))
+20/05/2020 19:31:04
+20/05/2020 19:31:04      at castNumber (/usr/src/app/node_modules/mongoose/lib/cast/number.js:28:10)
+20/05/2020 19:31:04      at SchemaNumber.cast (/usr/src/app/node_modules/mongoose/lib/schema/number.js:382:12)
+20/05/2020 19:31:04      at SchemaNumber.SchemaType.applySetters (/usr/src/app/node_modules/mongoose/lib/schematype.js:1031:12)
+20/05/2020 19:31:04      at SchemaNumber.SchemaType._castForQuery (/usr/src/app/node_modules/mongoose/lib/schematype.js:1459:15)
+20/05/2020 19:31:04      at SchemaNumber.castForQuery (/usr/src/app/node_modules/mongoose/lib/schema/number.js:436:14)
+20/05/2020 19:31:04      at SchemaNumber.SchemaType.castForQueryWrapper (/usr/src/app/node_modules/mongoose/lib/schematype.js:1428:15)
+20/05/2020 19:31:04      at castUpdateVal (/usr/src/app/node_modules/mongoose/lib/helpers/query/castUpdate.js:520:19)
+20/05/2020 19:31:04      at walkUpdatePath (/usr/src/app/node_modules/mongoose/lib/helpers/query/castUpdate.js:347:22)
+20/05/2020 19:31:04      at castUpdate (/usr/src/app/node_modules/mongoose/lib/helpers/query/castUpdate.js:94:7)
+20/05/2020 19:31:04      at model.Query._castUpdate (/usr/src/app/node_modules/mongoose/lib/query.js:4514:10)
+20/05/2020 19:31:04      at castDoc (/usr/src/app/node_modules/mongoose/lib/query.js:4543:18)
+20/05/2020 19:31:04      at model.Query._updateThunk (/usr/src/app/node_modules/mongoose/lib/query.js:3728:20)
+20/05/2020 19:31:04      at model.Query.<anonymous> (/usr/src/app/node_modules/mongoose/lib/query.js:3801:23)
+20/05/2020 19:31:04      at model.Query._wrappedThunk [as _execUpdate] (/usr/src/app/node_modules/mongoose/lib/helpers/query/wrapThunk.js:16:8)
+20/05/2020 19:31:04      at /usr/src/app/node_modules/kareem/index.js:278:20
+20/05/2020 19:31:04      at _next (/usr/src/app/node_modules/kareem/index.js:102:16)
+20/05/2020 19:31:04      at /usr/src/app/node_modules/kareem/index.js:507:38
+20/05/2020 19:31:04      at processTicksAndRejections (internal/process/task_queues.js:79:11) {
+20/05/2020 19:31:04    generatedMessage: true,
+20/05/2020 19:31:04    code: 'ERR_ASSERTION',
+20/05/2020 19:31:04    actual: false,
+20/05/2020 19:31:04    expected: true,
+20/05/2020 19:31:04    operator: '=='
+20/05/2020 19:31:04  }
+20/05/2020 19:31:04}
+
+
+
+
+
+
+

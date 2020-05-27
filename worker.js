@@ -25,6 +25,8 @@ module.exports = async (location) => {
     const link = links[i];
     const details = await storia.getDetailsPage(link);
 
+    console.log(`Link ${i}/${links.length}`);
+
     try {
       await db.property.update({
         url: details.url
