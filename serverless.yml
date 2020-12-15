@@ -1,0 +1,24 @@
+service: real-estate
+
+frameworkVersion: '2'
+useDotenv: true
+
+provider:
+  name: aws
+  profile: hostero
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'prod'}
+  region: eu-central-1
+  memorySize: 1024
+  timeout: 900
+  environment:
+    MONGO_URL: ${env:MONGO_URL}
+
+functions:
+  mehedinti_drobeta_turnu_severin:
+    handler: service.handler
+    events:
+      - schedule: rate(24 hours)
+    environment:
+      LOCATION: mehedinti/drobeta-turnu-severin
+      CUSTOM_CHROME: true
